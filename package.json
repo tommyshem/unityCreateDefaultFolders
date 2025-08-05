@@ -1,0 +1,6 @@
+{
+    "name": "com.tomsTools.createDefaultFolders",
+    "version": "0.0.1",
+    "displayName": "Create Default Folders",
+    "description": "Creates a menu item tools with the create default folders sub menu item so you can create with a simple click of the menu"
+}
