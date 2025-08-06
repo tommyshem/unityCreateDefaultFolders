@@ -76,8 +76,7 @@ namespace TomsTools
         }
         
         private static string GetGistUrl(){
-   
-            return $"https://gist.github.com/tommyshem/ad0720e6c37484a2e1b375ffa11788f8/raw/b4722bddcb26912736bd0dc0cbc69c8d4425c0e4/gistfile1.txt";
+            return $"https://gist.github.com/tommyshem/ad0720e6c37484a2e1b375ffa11788f8/raw/06c7d3124a8bbe248aeeeb0502df6661a2afca5b/gistfile1.txt";
             
     }
 
