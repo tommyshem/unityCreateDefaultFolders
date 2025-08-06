@@ -1,6 +1,11 @@
 {
-    "name": "com.tomsTools.createDefaultFolders",
+    "name": "com.tomstools.createdefaultfolders",
     "version": "0.0.1",
     "displayName": "Create Default Folders",
-    "description": "Creates a menu item tools with the create default folders sub menu item so you can create with a simple click of the menu"
+    "description": "Creates a menu item tools with the create default folders sub menu item so you can create with a simple click of the menu",
+       "author": {
+        "name": "T.Shemwell",
+        "email": "",
+        "url": "https://github.com/tommyshem/EasyExtractUnitypackage"
+    }
 }
