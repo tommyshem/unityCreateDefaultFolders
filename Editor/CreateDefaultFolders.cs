@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEditor;
 using static System.IO.Path;
 using static UnityEditor.AssetDatabase;
@@ -10,6 +11,22 @@ namespace TomsTools
 {
     public static class ToolsMakeFolders
     {
+        [MenuItem("Tools/Setup/Add 3D Packages")]
+        public static void Update3DUnityPackage()
+        {
+            AddUnityPackage("animation.rigging");
+            AddUnityPackage("formats.fbx");
+            AddUnityPackage("timeline");
+            AddUnityPackage("ai.navigation");
+            AddUnityPackage("behavior");
+            AddUnityPackage("cinemachine"); 
+        }
+
+        [MenuItem("Tools/Setup/CleanPackages")]
+        public static async void LoadNewManifest(){
+            var content = await GetGistContent(GetGistUrl());
+            ReplacePackageFile(content);
+        }
 
         [MenuItem("Tools/Setup/Make Default Folders")]
 
@@ -39,7 +56,7 @@ namespace TomsTools
             Refresh();
 
         }
-        public static void CreateFolders(string rootFolder, string[] folders)
+        private static void CreateFolders(string rootFolder, string[] folders)
         {
             var rootPath = Combine(dataPath, rootFolder);
             Log($"Creating folders in: {rootPath}");
@@ -57,5 +74,31 @@ namespace TomsTools
                 }
             }
         }
+        
+        private static string GetGistUrl(){
+   
+            return $"https://gist.github.com/tommyshem/ad0720e6c37484a2e1b375ffa11788f8/raw/b4722bddcb26912736bd0dc0cbc69c8d4425c0e4/gistfile1.txt";
+            
+    }
+
+    private static async Task<string> GetGistContent(string url){
+        using var client = new System.Net.Http.HttpClient();
+        var response = await client.GetAsync(url);
+        string content = await response.Content.ReadAsStringAsync();
+        return content;
+
+    }
+      
+    private static void ReplacePackageFile(string contents){
+        string existing = Combine(dataPath,"../Packages/manifest.json");
+        System.IO.File.WriteAllText(existing, contents);
+        UnityEditor.PackageManager.Client.Resolve();
+    }
+
+        private static void AddUnityPackage(string packageName) {
+            UnityEditor.PackageManager.Client.Add($"com.unity.{packageName}");
+        }
+
+
     }
 }
