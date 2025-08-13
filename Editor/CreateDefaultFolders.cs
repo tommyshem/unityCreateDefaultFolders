@@ -16,7 +16,7 @@ namespace TomsTools.Editor
     {
         // change to the correct gist you want to use
         private const string GistURL =
-            "https://gist.github.com/tommyshem/ad0720e6c37484a2e1b375ffa11788f8/raw/c8bcf0195f316091d76b5343e0cd675f47aef37a/gistfile1.txt";
+            "https://gist.githubusercontent.com/tommyshem/ad0720e6c37484a2e1b375ffa11788f8/raw/04117d04a880668ba074823c29bd6be6a3a618b8/gistfile1.txt";
 
         [MenuItem("Tools/Setup/Add 3D Packages")]
         public static void Add3DUnityPackage()
