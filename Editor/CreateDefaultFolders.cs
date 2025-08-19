@@ -18,7 +18,10 @@ namespace TomsTools.Editor
         private const string GistURL =
             "https://gist.githubusercontent.com/tommyshem/ad0720e6c37484a2e1b375ffa11788f8/raw";
 
-        [MenuItem("Tools/Setup/Add 3D Packages")]
+        /// <summary>
+        ///     Add 3D packages to the project
+        /// </summary>
+        [MenuItem("Tools/MySetup/Add 3D Packages")]
         public static void Add3DUnityPackage()
         {
             AddUnityPackage("animation.rigging");
@@ -34,8 +37,7 @@ namespace TomsTools.Editor
         ///     copy over the packages file with the
         ///     packages you want for a clean project to work on 
         /// </summary>
-        /// <returns>None</returns>
-        [MenuItem("Tools/Setup/Clean to Basic Packages")]
+        [MenuItem("Tools/MySetup/First Clean Setup - offline")]
         public static void LoadDefaultNewManifest()
         {
             try
@@ -54,7 +56,7 @@ namespace TomsTools.Editor
         ///     packages you want for a clean project to work on 
         /// </summary>
         /// <returns>None</returns>
-        [MenuItem("Tools/Setup/CleanPackages load from Gist file")]
+        [MenuItem("Tools/MySetup/First Clean Setup - load from Gist file")]
         public static async void LoadNewManifest()
         {
             try
@@ -68,7 +70,7 @@ namespace TomsTools.Editor
             }
         }
 
-        [MenuItem("Tools/Setup/Make Default Folders")]
+        [MenuItem("Tools/MySetup/Make Default Folders")]
         public static void CreateDefaultFolders()
         {
             // debugging information
@@ -121,11 +123,11 @@ namespace TomsTools.Editor
             }
         }
 
-        //      private static string GetGistUrl(){
-        //        return $"https://gist.github.com/tommyshem/ad0720e6c37484a2e1b375ffa11788f8/raw/c8bcf0195f316091d76b5343e0cd675f47aef37a/gistfile1.txt";
-
-        //}
-
+        /// <summary>
+        ///     Get the content of a Gist file
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         private static async Task<string> GetGistContent(string url)
         {
             using var client = new System.Net.Http.HttpClient();
@@ -134,14 +136,20 @@ namespace TomsTools.Editor
             return content;
         }
 
-
+        /// <summary>
+        ///     Replace the contents of the Packages/manifest.json file
+        /// </summary>
+        /// <param name="contents"></param>
         private static void ReplacePackageFile(string contents)
         {
             var existing = Combine(dataPath, "../Packages/manifest.json");
             System.IO.File.WriteAllText(existing, contents);
             Client.Resolve();
         }
-
+        /// <summary>
+        ///     Add a Unity package to the project
+        /// </summary>
+        /// <param name="packageName"></param>
         private static void AddUnityPackage(string packageName)
         {
             var mAddRequest = Client.Add($"com.unity.{packageName}");
