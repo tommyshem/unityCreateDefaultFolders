@@ -21,7 +21,7 @@ namespace TomsTools.Editor
         /// <summary>
         ///     Add 3D packages to the project
         /// </summary>
-        [MenuItem("Tools/MySetup/Add 3D Packages")]
+        [MenuItem("Tools/MySetup/Add 3D Packages", false, 3)]
         public static void Add3DUnityPackage()
         {
             AddUnityPackage("animation.rigging");
@@ -37,7 +37,7 @@ namespace TomsTools.Editor
         ///     copy over the packages file with the
         ///     packages you want for a clean project to work on 
         /// </summary>
-        [MenuItem("Tools/MySetup/First Clean Setup - offline")]
+        [MenuItem("Tools/MySetup/First Clean Setup - offline", false, 2)]
         public static void LoadDefaultNewManifest()
         {
             try
@@ -56,7 +56,7 @@ namespace TomsTools.Editor
         ///     packages you want for a clean project to work on 
         /// </summary>
         /// <returns>None</returns>
-        [MenuItem("Tools/MySetup/First Clean Setup - load from Gist file")]
+        [MenuItem("Tools/MySetup/First Clean Setup - load from Gist file", false, 1)]
         public static async void LoadNewManifest()
         {
             try
@@ -70,7 +70,7 @@ namespace TomsTools.Editor
             }
         }
 
-        [MenuItem("Tools/MySetup/Make Default Folders")]
+        [MenuItem("Tools/MySetup/Make Default Folders", false, 0)]
         public static void CreateDefaultFolders()
         {
             // debugging information
