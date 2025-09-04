@@ -69,6 +69,9 @@ namespace TomsTools.Editor
             "com.unity.cinemachine",
             "com.unity.animation.rigging",
             "com.unity.formats.fbx",
+        };
+
+        private static string[] packages_git_ToAdd = { "https://github.com/tommyshem/HierarchyPlus.git"
 
         };
 
@@ -77,6 +80,16 @@ namespace TomsTools.Editor
         // Public methods
         // --------------------------------------------------------------------------------
 
+
+        /// <summary>
+        ///     Add 3D packages to the project
+        /// </summary>
+        [MenuItem("Tools/TomsTools/Add git Packages", false, 4)]
+        public static void AddGitUnityPackage()
+        {
+            AddPackages(packages_git_ToAdd);
+
+        }
 
         /// <summary>
         ///     Add 3D packages to the project
