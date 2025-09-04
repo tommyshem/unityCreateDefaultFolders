@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using static System.IO.Path;
+using static System.Net.WebRequestMethods;
 using static UnityEditor.AssetDatabase;
 using static UnityEngine.Application;
 using static UnityEngine.Debug;
@@ -71,7 +72,9 @@ namespace TomsTools.Editor
             "com.unity.formats.fbx",
         };
 
-        private static string[] packages_git_ToAdd = { "https://github.com/tommyshem/HierarchyPlus.git"
+        private static string[] packages_git_ToAdd = {
+            "https://github.com/tommyshem/HierarchyPlus.git",
+            "https://github.com/tommyshem/SimpleFolderIcon.git?path=Packages/com.seaeees.simple-folder-icon"
 
         };
 
