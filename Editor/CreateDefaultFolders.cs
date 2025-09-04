@@ -14,22 +14,88 @@ namespace TomsTools.Editor
 {
     public static class ToolsMakeFolders
     {
-        // change to the correct gist you want to use
+        // Gist URL to load the default packages file from
         private const string GistURL =
-            "https://gist.githubusercontent.com/tommyshem/ad0720e6c37484a2e1b375ffa11788f8/raw";
+              "https://gist.githubusercontent.com/tommyshem/ad0720e6c37484a2e1b375ffa11788f8/raw";
+
+        // Default folders to create in a new project
+        // You can change these to whatever you want
+        private static string[] defaultFolders =
+        {
+            "Animations",
+            "Audio",
+            "Fonts",
+            "Gizmos",
+            "Icons",
+            "Materials",
+            "Models",
+            "Prefabs",
+            "Respurces",
+            "Scenes",
+            "Scripts",
+            "Settings",
+            "Sprites",
+            "Textures",
+            "UI"
+        };
+
+        // List of packages to remove from a new project
+        // You can change these to whatever you want
+        private static string[] packagesToRemove =
+        {
+            "com.unity.visualscripting",
+            "com.unity.collab-proxy",
+            "com.unity.multiplayer.center",
+            "com.unity.test-framework",
+            "com.unity.textmeshpro",
+            "com.unity.timeline",
+            "com.unity.ugui",
+            "com.unity.ai.navigation",
+            "com.unity.modules.xr",
+            "com.unity.modules.vr",
+            "com.unity.modules.unityanalytics",
+            "com.unity.modules.unitywebrequest",
+            "com.unity.modules.unitywebrequestassetbundle",
+            "com.unity.modules.unitywebrequestaudio",
+            "com.unity.modules.unitywebrequesttexture",
+            "com.unity.modules.unitywebrequestwww",
+            "com.unity.modules.accessibility"
+        };
+
+        // List of packages to add to a new project
+        // You can change these to whatever you want
+        private static string[] packages_3D_ToAdd =
+        {
+            "com.unity.cinemachine",
+            "com.unity.animation.rigging",
+            "com.unity.formats.fbx",
+
+        };
+
+
+        // --------------------------------------------------------------------------------
+        // Public methods
+        // --------------------------------------------------------------------------------
+
 
         /// <summary>
         ///     Add 3D packages to the project
         /// </summary>
-        [MenuItem("Tools/MySetup/Add 3D Packages", false, 3)]
+        [MenuItem("Tools/TomsTools/Add 3D Packages", false, 3)]
         public static void Add3DUnityPackage()
         {
-            AddUnityPackage("animation.rigging");
-            AddUnityPackage("formats.fbx");
-            AddUnityPackage("timeline");
-            AddUnityPackage("ai.navigation");
-            AddUnityPackage("behavior");
-            AddUnityPackage("cinemachine");
+            AddPackages(packages_3D_ToAdd);
+
+        }
+
+        /// <summary>
+        ///     Add 3D packages to the project
+        /// </summary>
+        [MenuItem("Tools/TomsTools/Remove unused Packages", false, 4)]
+        public static void RemoveUnityPackage()
+        {
+            RemovePackages(packagesToRemove);
+
         }
 
         /// <summary>
@@ -37,7 +103,7 @@ namespace TomsTools.Editor
         ///     copy over the packages file with the
         ///     packages you want for a clean project to work on 
         /// </summary>
-        [MenuItem("Tools/MySetup/First Clean Setup - offline", false, 2)]
+        [MenuItem("Tools/TomsTools/First Clean Setup (offline)", false, 1)]
         public static void LoadDefaultNewManifest()
         {
             try
@@ -56,7 +122,7 @@ namespace TomsTools.Editor
         ///     packages you want for a clean project to work on 
         /// </summary>
         /// <returns>None</returns>
-        [MenuItem("Tools/MySetup/First Clean Setup - load from Gist file", false, 1)]
+        [MenuItem("Tools/TomsTools/First Clean Setup - load from Gist file", false, 2)]
         public static async void LoadNewManifest()
         {
             try
@@ -73,7 +139,7 @@ namespace TomsTools.Editor
         /// <summary>
         ///     Create a set of default folders for a new project
         /// </summary>
-        [MenuItem("Tools/MySetup/Make Default Folders", false, 0)]
+        [MenuItem("Tools/TomsTools/Make Default Folders", false, 0)]
         public static void CreateDefaultFolders()
         {
             // debugging information
@@ -82,24 +148,13 @@ namespace TomsTools.Editor
             // Create the root default folder
             CreateDirectory(Combine(dataPath, "_Project"));
             // 
-            CreateFolders("_Project", new[]
-            {
-                "Assets",
-                "Assets/Animations",
-                "Assets/Audio",
-                "Assets/Fonts",
-                "Assets/Icons",
-                "Assets/Materials",
-                "Assets/Models",
-                "Assets/Prefabs",
-                "Assets/Scenes",
-                "Assets/Scripts",
-                "Assets/Sprites",
-                "Assets/Textures",
-                "Assets/UI"
-            });
+            CreateFolders("_Project", defaultFolders);
             Refresh();
         }
+
+        // --------------------------------------------------------------------------------
+        // Private methods
+        // --------------------------------------------------------------------------------
 
         /// <summary>
         ///     Create all the folders from the passed in from the string list    
@@ -149,13 +204,25 @@ namespace TomsTools.Editor
             System.IO.File.WriteAllText(existing, contents);
             Client.Resolve();
         }
+
+        /// <summary>
+        /// Add a list of Unity packages to the project
+        /// </summary>
+        private static void AddPackages(string[] packages)
+        {
+            foreach (var package in packages)
+            {
+                AddUnityPackage(package);
+            }
+        }
+
         /// <summary>
         ///     Add a Unity package to the project
         /// </summary>
         /// <param name="packageName"></param>
         private static void AddUnityPackage(string packageName)
         {
-            var mAddRequest = Client.Add($"com.unity.{packageName}");
+            var mAddRequest = Client.Add($"{packageName}");
 
             if (mAddRequest != null)
             {
@@ -175,5 +242,48 @@ namespace TomsTools.Editor
                 }
             }
         }
+
+        /// <summary>
+        /// Remove a list of Unity packages from the project
+        /// </summary>
+        private static void RemovePackages(string[] packages)
+        {
+            foreach (var package in packages)
+            {
+                RemoveUnityPackage(package);
+            }
+        }
+
+        /// <summary>
+        ///     Remove a Unity package to the project
+        /// </summary>
+        /// <param name="packageName"></param>
+        private static void RemoveUnityPackage(string packageName)
+        {
+            var mAddRequest = Client.Remove($"{packageName}");
+
+            if (mAddRequest != null)
+            {
+                switch (mAddRequest.Status)
+                {
+                    case StatusCode.InProgress:
+                        Log("Operation in progress...");
+                        break;
+
+                    case StatusCode.Success:
+                        Log($"Successfully removed {packageName}");
+                        break;
+
+                    case StatusCode.Failure:
+                        LogError($"Operation failed on Package: {packageName} Error: {mAddRequest.Error.message}");
+                        break;
+                }
+            }
+        }
+
+
+
+
+
     }
 }
