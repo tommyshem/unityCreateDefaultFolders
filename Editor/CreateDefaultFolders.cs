@@ -70,6 +70,9 @@ namespace TomsTools.Editor
             }
         }
 
+        /// <summary>
+        ///     Create a set of default folders for a new project
+        /// </summary>
         [MenuItem("Tools/MySetup/Make Default Folders", false, 0)]
         public static void CreateDefaultFolders()
         {
