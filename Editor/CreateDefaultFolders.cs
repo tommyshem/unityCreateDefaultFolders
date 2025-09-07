@@ -78,6 +78,13 @@ namespace TomsTools.Editor
 
         };
 
+        private static string[] packages_in_unity_store = {
+        "Transform Enhancer",
+        "PieTabs",
+        "Prototype Textures",
+        "Starter Assets - ThirdPerson | Updates in new CharacterController package"
+
+        };  //  "Sortify", com.unity.
 
         // --------------------------------------------------------------------------------
         // Public methods
@@ -87,7 +94,58 @@ namespace TomsTools.Editor
         /// <summary>
         ///     Add 3D packages to the project
         /// </summary>
-        [MenuItem("Tools/TomsTools/Add git Packages", false, 4)]
+        [MenuItem("Tools/TomsTools/Setup New project)", false, 0)]
+        public static void SetupNewPackage()
+        {
+            // Setup project settings
+            // set company name and root namespace
+            string newCompanyName = "2Hammers";
+            PlayerSettings.companyName = newCompanyName;
+            EditorSettings.projectGenerationRootNamespace = newCompanyName;
+            EditorSettings.enterPlayModeOptions.HasFlag(EnterPlayModeOptions.DisableDomainReload);
+
+            // create default folders
+            CreateDefaultFolders();
+
+            // install packages and remove unwanted packages
+            RemoveUnityPackage();
+            Add3DUnityPackage();
+            AddGitUnityPackage();
+            // AddUnityStorePackage();  // TODO: not working yet
+
+
+        }
+
+        /// <summary>
+        ///     Create a set of default folders for a new project
+        /// </summary>
+        [MenuItem("Tools/TomsTools/Make Default Folders", false, 11)]
+        public static void CreateDefaultFolders()
+        {
+            // debugging information
+            Log("Creating default folders...");
+            Log(dataPath);
+            // Create the root default folder
+            CreateDirectory(Combine(dataPath, "_Project"));
+            // 
+            CreateFolders("_Project", defaultFolders);
+            Refresh();
+        }
+
+        /// <summary>
+        ///     Add 3D packages to the project
+        /// </summary>
+        //[MenuItem("Tools/TomsTools/Add unity store Packages", false, 4)]
+        public static void AddUnityStorePackage()
+        {
+            //TODO: not working yet
+
+        }
+
+        /// <summary>
+        ///     Add 3D packages to the project
+        /// </summary>
+        //[MenuItem("Tools/TomsTools/Add git Packages", false, 3)]
         public static void AddGitUnityPackage()
         {
             AddPackages(packages_git_ToAdd);
@@ -97,7 +155,7 @@ namespace TomsTools.Editor
         /// <summary>
         ///     Add 3D packages to the project
         /// </summary>
-        [MenuItem("Tools/TomsTools/Add 3D Packages", false, 3)]
+        //[MenuItem("Tools/TomsTools/Add 3D Packages", false, 2)]
         public static void Add3DUnityPackage()
         {
             AddPackages(packages_3D_ToAdd);
@@ -107,7 +165,7 @@ namespace TomsTools.Editor
         /// <summary>
         ///     Add 3D packages to the project
         /// </summary>
-        [MenuItem("Tools/TomsTools/Remove unused Packages", false, 4)]
+        //[MenuItem("Tools/TomsTools/Remove unused Packages", false, 1)]
         public static void RemoveUnityPackage()
         {
             RemovePackages(packagesToRemove);
@@ -119,7 +177,7 @@ namespace TomsTools.Editor
         ///     copy over the packages file with the
         ///     packages you want for a clean project to work on 
         /// </summary>
-        [MenuItem("Tools/TomsTools/First Clean Setup (offline)", false, 1)]
+        //[MenuItem("Tools/TomsTools/First Clean Setup (offline)", false, 5)]
         public static void LoadDefaultNewManifest()
         {
             try
@@ -138,7 +196,7 @@ namespace TomsTools.Editor
         ///     packages you want for a clean project to work on 
         /// </summary>
         /// <returns>None</returns>
-        [MenuItem("Tools/TomsTools/First Clean Setup - load from Gist file", false, 2)]
+        //[MenuItem("Tools/TomsTools/First Clean Setup - load from Gist file", false, 6)]
         public static async void LoadNewManifest()
         {
             try
@@ -152,21 +210,7 @@ namespace TomsTools.Editor
             }
         }
 
-        /// <summary>
-        ///     Create a set of default folders for a new project
-        /// </summary>
-        [MenuItem("Tools/TomsTools/Make Default Folders", false, 0)]
-        public static void CreateDefaultFolders()
-        {
-            // debugging information
-            Log("Creating default folders...");
-            Log(dataPath);
-            // Create the root default folder
-            CreateDirectory(Combine(dataPath, "_Project"));
-            // 
-            CreateFolders("_Project", defaultFolders);
-            Refresh();
-        }
+
 
         // --------------------------------------------------------------------------------
         // Private methods
